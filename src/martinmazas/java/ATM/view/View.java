@@ -110,7 +110,6 @@ public class View implements IView {
 
         public void init() {
             register();
-            System.out.println("hi");
         }
     }
 }

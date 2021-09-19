@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Sun Sep 19 12:17:41 IDT 2021:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.15.2.0 - (1873585): instance a816c00e-017b-fd58-d141-00000f944500 
+on database directory /Users/martinmazas/Desktop/Martin/ATM-java/ATM-java/atmDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@73d16e93 
+Loaded from file:/Users/martinmazas/Downloads/db-derby-10.15.2.0-bin/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=15.0.1+9-18
+user.dir=/Users/martinmazas/Desktop/Martin/ATM-java/ATM-java
+os.name=Mac OS X
+os.arch=x86_64
+os.version=10.16
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
