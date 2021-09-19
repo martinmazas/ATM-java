@@ -23,52 +23,61 @@ public class View implements IView {
 
     public static class ApplicationUI
     {
-        private JFrame loginFrame, registerFrame;
-        private JPanel loginPanel, loginButtonsPanel, registerPanel, registerButtonsPanel;
-        private JLabel welcomeLabel, registerLabel;
-        private JButton registerButton, loginButton, backButton, registerButton2;
+        private JFrame initialFrame, registerFrame, loginFrame;
+        private JPanel initialPanel, initialButtonsPanel, registerPanel, registerButtonsPanel, loginPanel,
+                loginButtonsPanel;
+        private JLabel welcomeLabel, registerLabel, loginLabel;
+        private JButton registerButton, loginButton, backRegisterButton, registerButton2, backLoginButton, loginButton2;
 
         public ApplicationUI() {
-            loginFrame = new JFrame("ATM");
+            initialFrame = new JFrame("ATM");
             initial();
-            loginFrame.setVisible(true);
+            initialFrame.setVisible(true);
         }
 
         public void initial() {
             // loginPanel
-            loginPanel = new JPanel();
-            loginPanel.setLayout(new FlowLayout());
-            loginPanel.setBackground(Color.white);
+            initialPanel = new JPanel();
+            initialPanel.setLayout(new FlowLayout());
+            initialPanel.setBackground(Color.white);
 
             // welcomeLabel
             welcomeLabel = new JLabel("Welcome to ATM service");
             welcomeLabel.setFont(new Font("Verdana",Font.PLAIN,25));
 
             // Login Buttons
-            loginButtonsPanel = new JPanel();
-            loginButtonsPanel.setBackground(Color.white);
+            initialButtonsPanel = new JPanel();
+            initialButtonsPanel.setBackground(Color.white);
             registerButton = new JButton();
             registerButton.setText("Register");
             loginButton = new JButton();
             loginButton.setText("Login");
 
-            loginPanel.add(welcomeLabel);
-            loginButtonsPanel.add(registerButton);
-            loginButtonsPanel.add(loginButton);
+            initialPanel.add(welcomeLabel);
+            initialButtonsPanel.add(registerButton);
+            initialButtonsPanel.add(loginButton);
 
             // login Frame
-            loginFrame.setLayout(new GridLayout(2,2));
-            loginFrame.add(loginPanel);
-            loginFrame.add(loginButtonsPanel);
-            loginFrame.setSize(500,500);
-            loginFrame.setLocationRelativeTo(null);
-            loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            initialFrame.setLayout(new GridLayout(2,2));
+            initialFrame.add(initialPanel);
+            initialFrame.add(initialButtonsPanel);
+            initialFrame.setSize(500,500);
+            initialFrame.setLocationRelativeTo(null);
+            initialFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
             registerButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    loginFrame.setVisible(false);
+                    initialFrame.setVisible(false);
                     registerFrame.setVisible(true);
+                }
+            });
+
+            loginButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    initialFrame.setVisible(false);
+                    loginFrame.setVisible(true);
                 }
             });
         }
@@ -86,9 +95,9 @@ public class View implements IView {
 
             registerButtonsPanel = new JPanel();
             registerButtonsPanel.setBackground(Color.white);
-            backButton = new JButton("Back");
+            backRegisterButton = new JButton("Back");
             registerButton2 = new JButton("Register");
-            registerButtonsPanel.add(backButton);
+            registerButtonsPanel.add(backRegisterButton);
             registerButtonsPanel.add(registerButton2);
 
             registerFrame.add(registerPanel);
@@ -99,17 +108,53 @@ public class View implements IView {
             registerFrame.setLocationRelativeTo(null);
             registerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-            backButton.addActionListener(new ActionListener() {
+            backRegisterButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     registerFrame.setVisible(false);
-                    loginFrame.setVisible(true);
+                    initialFrame.setVisible(true);
                 }
             });
         }
 
+        public void login() {
+            loginFrame = new JFrame("Login");
+            loginPanel = new JPanel();
+            loginPanel.setLayout(new FlowLayout());
+            loginPanel.setBackground(Color.white);
+
+            loginLabel = new JLabel("Login");
+            loginLabel.setFont(new Font("Verdana",Font.PLAIN,25));
+            loginPanel.add(loginLabel);
+
+            loginButtonsPanel = new JPanel();
+            loginButtonsPanel.setBackground(Color.white);
+            backLoginButton = new JButton("Back");
+            loginButton2 = new JButton("Login");
+            loginButtonsPanel.add(backLoginButton);
+            loginButtonsPanel.add(loginButton2);
+
+            loginFrame.add(loginPanel);
+            loginFrame.add(loginButtonsPanel);
+
+            loginFrame.setLayout(new GridLayout(2,2));
+            loginFrame.setSize(500, 500);
+            loginFrame.setLocationRelativeTo(null);
+            loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+            backLoginButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    loginFrame.setVisible(false);
+                    initialFrame.setVisible(true);
+                }
+            });
+
+        }
+
         public void init() {
             register();
+            login();
         }
     }
 }
