@@ -4,30 +4,23 @@ import martinmazas.java.ATM.viewmodel.IViewModel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 public class View implements IView {
     private IViewModel vm;
     private ApplicationUI ui;
 
     public View() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                View.this.ui = new ApplicationUI();
-                View.this.ui.init();
-            }
+        SwingUtilities.invokeLater(() -> {
+            View.this.ui = new ApplicationUI();
+            View.this.ui.init();
         });
     }
 
-    public static class ApplicationUI
-    {
-        private JFrame initialFrame, registerFrame, loginFrame;
-        private JPanel initialPanel, initialButtonsPanel, registerPanel, registerButtonsPanel, loginPanel,
-                loginButtonsPanel;
-        private JLabel welcomeLabel, registerLabel, loginLabel;
-        private JButton registerButton, loginButton, backRegisterButton, registerButton2, backLoginButton, loginButton2;
+    public static class ApplicationUI {
+        private final JFrame initialFrame;
+        private JFrame registerFrame;
+        private JFrame loginFrame;
 
         public ApplicationUI() {
             initialFrame = new JFrame("ATM");
@@ -36,6 +29,9 @@ public class View implements IView {
         }
 
         public void initial() {
+            JPanel initialPanel, initialButtonsPanel;
+            JLabel welcomeLabel;
+            JButton registerButton, loginButton;
             // loginPanel
             initialPanel = new JPanel();
             initialPanel.setLayout(new FlowLayout());
@@ -43,7 +39,7 @@ public class View implements IView {
 
             // welcomeLabel
             welcomeLabel = new JLabel("Welcome to ATM service");
-            welcomeLabel.setFont(new Font("Verdana",Font.PLAIN,25));
+            welcomeLabel.setFont(new Font("Verdana", Font.PLAIN, 25));
 
             // Login Buttons
             initialButtonsPanel = new JPanel();
@@ -58,96 +54,158 @@ public class View implements IView {
             initialButtonsPanel.add(loginButton);
 
             // login Frame
-            initialFrame.setLayout(new GridLayout(2,2));
+            initialFrame.setLayout(new GridLayout(2, 2));
             initialFrame.add(initialPanel);
             initialFrame.add(initialButtonsPanel);
-            initialFrame.setSize(500,500);
+            initialFrame.setSize(500, 500);
             initialFrame.setLocationRelativeTo(null);
             initialFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-            registerButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    initialFrame.setVisible(false);
-                    registerFrame.setVisible(true);
-                }
+            registerButton.addActionListener(e -> {
+                initialFrame.setVisible(false);
+                registerFrame.setVisible(true);
             });
 
-            loginButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    initialFrame.setVisible(false);
-                    loginFrame.setVisible(true);
-                }
+            loginButton.addActionListener(e -> {
+                initialFrame.setVisible(false);
+                loginFrame.setVisible(true);
             });
         }
 
         public void register() {
-            registerFrame = new JFrame("Register");
-            registerPanel = new JPanel();
+            JLabel nameLabel, idLabel, pinLabel, confirmPinLabel, registerLabel;
+            JTextField nameField, idField;
+            JPanel registerLabelsPanel,registerPanel, namePanel, idPanel, pinPanel, confirmPinPanel, registerButtonsPanel;
+            JPasswordField pinField, confirmPinField;
+            JButton backButton, registerButton;
 
+            registerFrame = new JFrame("Register");
+
+            registerPanel = new JPanel();
             registerPanel.setLayout(new FlowLayout());
-            registerPanel.setBackground(Color.white);
+            registerPanel.setBackground(Color.WHITE);
 
             registerLabel = new JLabel("Please fill your data to register");
-            registerLabel.setFont(new Font("Verdana",Font.PLAIN,25));
+            registerLabel.setFont(new Font("Verdana", Font.PLAIN, 25));
             registerPanel.add(registerLabel);
+
+            // Form
+            registerLabelsPanel = new JPanel();
+            registerLabelsPanel.setLayout(new BoxLayout(registerLabelsPanel, BoxLayout.Y_AXIS));
+            registerLabelsPanel.setBackground(Color.WHITE);
+
+
+            nameLabel = new JLabel("Name");
+            nameLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+            nameField = new JTextField(10);
+            nameField.setFont(new Font("Arial", Font.PLAIN, 15));
+
+            idLabel = new JLabel("Personal id");
+            idLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+            idField = new JTextField(10);
+            idField.setFont(new Font("Arial", Font.PLAIN, 15));
+
+            pinLabel = new JLabel("Pin");
+            pinLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+            pinField = new JPasswordField(10);
+            pinField.setFont(new Font("Arial", Font.PLAIN, 15));
+
+            confirmPinLabel = new JLabel("Pin confirmation");
+            confirmPinLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+            confirmPinField = new JPasswordField(10);
+            confirmPinField.setFont(new Font("Arial", Font.PLAIN, 15));
+
+            namePanel = new JPanel();
+            namePanel.setBackground(Color.WHITE);
+            namePanel.add(nameLabel);
+            namePanel.add(nameField);
+
+            idPanel = new JPanel();
+            idPanel.setBackground(Color.WHITE);
+            idPanel.add(idLabel);
+            idPanel.add(idField);
+
+            pinPanel = new JPanel();
+            pinPanel.setBackground(Color.WHITE);
+            pinPanel.add(pinLabel);
+            pinPanel.add(pinField);
+
+            confirmPinPanel = new JPanel();
+            confirmPinPanel.setBackground(Color.WHITE);
+            confirmPinPanel.add(confirmPinLabel);
+            confirmPinPanel.add(confirmPinField);
+
+            registerLabelsPanel.add(namePanel);
+            registerLabelsPanel.add(idPanel);
+            registerLabelsPanel.add(pinPanel);
+            registerLabelsPanel.add(confirmPinPanel);
 
             registerButtonsPanel = new JPanel();
             registerButtonsPanel.setBackground(Color.white);
-            backRegisterButton = new JButton("Back");
-            registerButton2 = new JButton("Register");
-            registerButtonsPanel.add(backRegisterButton);
-            registerButtonsPanel.add(registerButton2);
+            backButton = new JButton("Back");
+            registerButton = new JButton("Register");
+            registerButtonsPanel.add(backButton);
+            registerButtonsPanel.add(registerButton);
 
             registerFrame.add(registerPanel);
+            registerFrame.add(registerLabelsPanel);
             registerFrame.add(registerButtonsPanel);
 
-            registerFrame.setLayout(new GridLayout(2,2));
+            registerFrame.setLayout(new GridLayout(3, 2));
             registerFrame.setSize(500, 500);
             registerFrame.setLocationRelativeTo(null);
             registerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-            backRegisterButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    registerFrame.setVisible(false);
-                    initialFrame.setVisible(true);
-                }
+            backButton.addActionListener(e -> {
+                registerFrame.setVisible(false);
+                initialFrame.setVisible(true);
+            });
+
+            registerButton.addActionListener(e -> {
+                System.out.println(nameField.getText());
+                System.out.println(idField.getText());
+                System.out.println(pinField.getPassword());
+                System.out.println(confirmPinField.getPassword());
+                System.out.println(Arrays.equals(pinField.getPassword(), confirmPinField.getPassword()));
+                nameField.setText("");
+                idField.setText("");
+                pinField.setText("");
+                confirmPinField.setText("");
             });
         }
 
         public void login() {
+            JPanel loginPanel, loginButtonsPanel;
+            JLabel loginLabel;
+            JButton backButton, loginButton;
+
             loginFrame = new JFrame("Login");
             loginPanel = new JPanel();
             loginPanel.setLayout(new FlowLayout());
             loginPanel.setBackground(Color.white);
 
             loginLabel = new JLabel("Login");
-            loginLabel.setFont(new Font("Verdana",Font.PLAIN,25));
+            loginLabel.setFont(new Font("Verdana", Font.PLAIN, 25));
             loginPanel.add(loginLabel);
 
             loginButtonsPanel = new JPanel();
             loginButtonsPanel.setBackground(Color.white);
-            backLoginButton = new JButton("Back");
-            loginButton2 = new JButton("Login");
-            loginButtonsPanel.add(backLoginButton);
-            loginButtonsPanel.add(loginButton2);
+            backButton = new JButton("Back");
+            loginButton = new JButton("Login");
+            loginButtonsPanel.add(backButton);
+            loginButtonsPanel.add(loginButton);
 
             loginFrame.add(loginPanel);
             loginFrame.add(loginButtonsPanel);
 
-            loginFrame.setLayout(new GridLayout(2,2));
+            loginFrame.setLayout(new GridLayout(2, 2));
             loginFrame.setSize(500, 500);
             loginFrame.setLocationRelativeTo(null);
             loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-            backLoginButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    loginFrame.setVisible(false);
-                    initialFrame.setVisible(true);
-                }
+            backButton.addActionListener(e -> {
+                loginFrame.setVisible(false);
+                initialFrame.setVisible(true);
             });
 
         }
