@@ -1,10 +1,13 @@
 package martinmazas.java.ATM.view;
-
+import martinmazas.java.ATM.model.User;
 import martinmazas.java.ATM.viewmodel.IViewModel;
 
+import javax.crypto.*;
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
+import java.security.InvalidKeyException;
+import java.security.Key;
+import java.security.NoSuchAlgorithmException;
 
 public class View implements IView {
     private IViewModel vm;
@@ -17,7 +20,12 @@ public class View implements IView {
         });
     }
 
-    public static class ApplicationUI {
+    @Override
+    public void setViewModel(IViewModel vm) {
+        this.vm = vm;
+    }
+
+    public class ApplicationUI {
         private final JFrame initialFrame;
         private JFrame registerFrame;
         private JFrame loginFrame;
@@ -165,11 +173,14 @@ public class View implements IView {
             });
 
             registerButton.addActionListener(e -> {
-                System.out.println(nameField.getText());
-                System.out.println(idField.getText());
-                System.out.println(pinField.getPassword());
-                System.out.println(confirmPinField.getPassword());
-                System.out.println(Arrays.equals(pinField.getPassword(), confirmPinField.getPassword()));
+//                System.out.println(nameField.getText());
+//                System.out.println(idField.getText());
+//                System.out.println(pinField.getPassword().toString());
+//                System.out.println(confirmPinField.getPassword().toString());
+//                System.out.println(Arrays.equals(pinField.getPassword(), confirmPinField.getPassword()));
+//                User user = new User(idField.getText(),nameField.getText(), pinField.getPassword().toString());
+//                System.out.println(user.toString());
+                vm.addUser(idField.getText(),nameField.getText(), pinField.getPassword().toString());
                 nameField.setText("");
                 idField.setText("");
                 pinField.setText("");
@@ -244,12 +255,24 @@ public class View implements IView {
             });
 
             loginButton.addActionListener(e -> {
-                System.out.println(userField.getText());
-                System.out.println(pinField.getPassword());
+                String algorithm = "DESede";
+                String pass = null;
+                try {
+                    Key key = KeyGenerator.getInstance(algorithm).generateKey();
+                    Cipher cipher = Cipher.getInstance(algorithm);
+                    String input = pinField.getPassword().toString();
+                    cipher.init(Cipher.ENCRYPT_MODE, key);
+                    byte[] inputBytes = input.getBytes();
+                    cipher.doFinal(inputBytes);
+                    pass = new String(inputBytes);
+                } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException ex) {
+                    ex.printStackTrace();
+                }
+//                System.out.println(userField.getText());
+//                System.out.println(pass);
                 userField.setText("");
                 pinField.setText("");
             });
-
         }
 
         public void init() {

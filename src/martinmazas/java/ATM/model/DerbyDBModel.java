@@ -3,13 +3,13 @@ package martinmazas.java.ATM.model;
 import java.sql.*;
 
 public class DerbyDBModel implements IModel {
-    private static String driver = "org.apache.derby.jdbc.EmbeddedDriver";
-    private static String protocol = "jdbc:derby:atmDB;create=true";
+    private static final String driver = "org.apache.derby.jdbc.EmbeddedDriver";
+    private static final String protocol = "jdbc:derby:atmDB;create=true";
 
     public void createTable(String tableName, String columns) throws ATMException {
         Connection connection;
         Statement statement;
-        ResultSet rs = null;
+//        ResultSet rs = null;
 
         String query = "CREATE TABLE " + tableName + " " + columns;
         try {
@@ -20,9 +20,7 @@ public class DerbyDBModel implements IModel {
             throw new ATMException("Problem with the connection", e);
         }
 
-
         try {
-            System.out.println(query);
             statement.execute(query);
             System.out.println("Table " + tableName + " created successfully");
         } catch (SQLException e) {
@@ -39,7 +37,7 @@ public class DerbyDBModel implements IModel {
     public void deleteTable(String tableName) throws ATMException {
         Connection connection;
         Statement statement;
-        ResultSet rs = null;
+//        ResultSet rs = null;
 
         try {
             Class.forName(driver);
@@ -62,5 +60,10 @@ public class DerbyDBModel implements IModel {
         } catch (SQLException e) {
             throw new ATMException("Problem with closing statement!", e);
         }
+    }
+
+    @Override
+    public void addUser(User user) throws ATMException {
+        // Need to make a query to add user
     }
 }

@@ -2,8 +2,12 @@ package martinmazas.java.ATM.model;
 
 public class main {
     public static void main(String args[]) throws ATMException {
+//        User user = new User(1234, "Martin Mazas", "1111");
+//        System.out.println(user.getName());
+//        System.out.println(user.getId());
+//        System.out.println(user.getPin());
+//        System.out.println(user.getAccount());
 //        DerbyDBModel model = new DerbyDBModel();
-
         // Account table
 
 //        model.createTable("Account", "(accountId int NOT NULL PRIMARY KEY, " +
