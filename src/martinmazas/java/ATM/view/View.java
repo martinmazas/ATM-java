@@ -75,7 +75,7 @@ public class View implements IView {
         public void register() {
             JLabel nameLabel, idLabel, pinLabel, confirmPinLabel, registerLabel;
             JTextField nameField, idField;
-            JPanel registerLabelsPanel,registerPanel, namePanel, idPanel, pinPanel, confirmPinPanel, registerButtonsPanel;
+            JPanel registerLabelsPanel, registerPanel, namePanel, idPanel, pinPanel, confirmPinPanel, registerButtonsPanel;
             JPasswordField pinField, confirmPinField;
             JButton backButton, registerButton;
 
@@ -94,22 +94,25 @@ public class View implements IView {
             registerLabelsPanel.setLayout(new BoxLayout(registerLabelsPanel, BoxLayout.Y_AXIS));
             registerLabelsPanel.setBackground(Color.WHITE);
 
-
+            // name label
             nameLabel = new JLabel("Name");
             nameLabel.setFont(new Font("Arial", Font.PLAIN, 20));
             nameField = new JTextField(10);
             nameField.setFont(new Font("Arial", Font.PLAIN, 15));
 
+            // id label
             idLabel = new JLabel("Personal id");
             idLabel.setFont(new Font("Arial", Font.PLAIN, 20));
             idField = new JTextField(10);
             idField.setFont(new Font("Arial", Font.PLAIN, 15));
 
+            // pin label
             pinLabel = new JLabel("Pin");
             pinLabel.setFont(new Font("Arial", Font.PLAIN, 20));
             pinField = new JPasswordField(10);
             pinField.setFont(new Font("Arial", Font.PLAIN, 15));
 
+            // confirm pin label
             confirmPinLabel = new JLabel("Pin confirmation");
             confirmPinLabel.setFont(new Font("Arial", Font.PLAIN, 20));
             confirmPinField = new JPasswordField(10);
@@ -175,9 +178,11 @@ public class View implements IView {
         }
 
         public void login() {
-            JPanel loginPanel, loginButtonsPanel;
-            JLabel loginLabel;
+            JPanel loginPanel, loginButtonsPanel, userPanel, pinPanel, loginLabelsPanel;
+            JLabel loginLabel, userLabel, pinLabel;
             JButton backButton, loginButton;
+            JTextField userField;
+            JPasswordField pinField;
 
             loginFrame = new JFrame("Login");
             loginPanel = new JPanel();
@@ -188,6 +193,35 @@ public class View implements IView {
             loginLabel.setFont(new Font("Verdana", Font.PLAIN, 25));
             loginPanel.add(loginLabel);
 
+            loginLabelsPanel = new JPanel();
+            loginLabelsPanel.setLayout(new BoxLayout(loginLabelsPanel, BoxLayout.Y_AXIS));
+            loginLabelsPanel.setBackground(Color.WHITE);
+
+            // user
+            userLabel = new JLabel("User");
+            userLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+            userField = new JTextField(10);
+            userField.setFont(new Font("Arial", Font.PLAIN, 15));
+
+            //pin
+            pinLabel = new JLabel("Pin");
+            pinLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+            pinField = new JPasswordField(10);
+            pinField.setFont(new Font("Arial", Font.PLAIN, 15));
+
+            userPanel = new JPanel();
+            userPanel.setBackground(Color.WHITE);
+            userPanel.add(userLabel);
+            userPanel.add(userField);
+
+            pinPanel = new JPanel();
+            pinPanel.setBackground(Color.WHITE);
+            pinPanel.add(pinLabel);
+            pinPanel.add(pinField);
+
+            loginLabelsPanel.add(userPanel);
+            loginLabelsPanel.add(pinPanel);
+
             loginButtonsPanel = new JPanel();
             loginButtonsPanel.setBackground(Color.white);
             backButton = new JButton("Back");
@@ -196,9 +230,10 @@ public class View implements IView {
             loginButtonsPanel.add(loginButton);
 
             loginFrame.add(loginPanel);
+            loginFrame.add(loginLabelsPanel);
             loginFrame.add(loginButtonsPanel);
 
-            loginFrame.setLayout(new GridLayout(2, 2));
+            loginFrame.setLayout(new GridLayout(3, 2));
             loginFrame.setSize(500, 500);
             loginFrame.setLocationRelativeTo(null);
             loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -206,6 +241,13 @@ public class View implements IView {
             backButton.addActionListener(e -> {
                 loginFrame.setVisible(false);
                 initialFrame.setVisible(true);
+            });
+
+            loginButton.addActionListener(e -> {
+                System.out.println(userField.getText());
+                System.out.println(pinField.getPassword());
+                userField.setText("");
+                pinField.setText("");
             });
 
         }
